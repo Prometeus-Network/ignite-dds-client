@@ -1,0 +1,20 @@
+version: '3.7'
+networks:
+  ignite-dds_kafka-net:
+    external:
+      name: ignite-dds_kafka-net
+services:
+  ignite-api:
+    build:
+      context: .
+      dockerfile: backend.docker
+    dns:
+      - 8.8.8.8
+      - 4.4.4.4
+    ports:
+      - ${API_PORT}:3001
+    networks:
+      - default
+      - ignite-dds_kafka-net
+    volumes:
+      - /app/node_modules
