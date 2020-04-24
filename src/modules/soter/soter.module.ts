@@ -41,14 +41,14 @@ const https = require('https');
         SoterController,
     ],
     providers: [
-        {
-            provide: 'IGNITE_SERVICE',
-            useFactory: (configService: ConfigService) => {
-                const kafkaOptions = configService.getKafkaOptions();
-                return ClientProxyFactory.create(kafkaOptions);
-            },
-            inject: [ConfigService],
-        },
+        // {
+        //     provide: 'IGNITE_SERVICE',
+        //     useFactory: (configService: ConfigService) => {
+        //         const kafkaOptions = configService.getKafkaOptions();
+        //         return ClientProxyFactory.create(kafkaOptions);
+        //     },
+        //     inject: [ConfigService],
+        // },
         FileFetcher,
         ArchiveService,
         SoterService,
