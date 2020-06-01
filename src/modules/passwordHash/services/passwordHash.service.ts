@@ -1,4 +1,4 @@
-import {Injectable} from "@nestjs/common";
+import {BadRequestException, Injectable} from "@nestjs/common";
 import {Web3PrivateService} from "../web3Private.service";
 import Web3 from "web3";
 import {ConfigService} from "../../../config/config.service";
@@ -19,6 +19,16 @@ export class PasswordHashService {
             this.configService.getPasswordHashContractAbi(),
             this.configService.getPasswordHashContractAddress(),
         );
+    }
+
+    public async getPasswordByTransactionHash(transactionHash: string) {
+        try {
+            const contract = this.contract();
+            const transaction = await this.web3.eth.getTransaction(transactionHash);
+            return contract.methods.userPassword(transaction.from).call();
+        } catch (e) {
+            throw new BadRequestException(e.message);
+        }
     }
 
     public async getBalance(address: string) {

@@ -12,24 +12,6 @@ export class PasswordHashController {
         private readonly passwordHashService: PasswordHashService,
     ) {}
 
-    @Get('/:transactionHash')
-    public async getPasswordByTransactionHash(
-        @Param('transactionHash') transactionHash: string,
-        @Res() res: Response,
-    ) {
-        const hash = await this.passwordHashService.getPasswordByTransactionHash(transactionHash);
-        return res.status(200).send({hash});
-    }
-
-    @Post('/hash/set')
-    public async changePasswordHash(
-        @Body() changePasswordDto: PasswordHashDto,
-        @Res() res: Response,
-    ) {
-        await this.handler.handle(changePasswordDto);
-        return res.status(200).send({message: 'To new hash success changed!'});
-    }
-
     @Get('/hash/:address')
     public async getHash(@Param('address') address: string, @Res() res: Response) {
         const hash = await this.passwordHashService.getAddressHash(address);
