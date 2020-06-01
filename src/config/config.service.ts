@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import {KafkaOptions, Transport} from "@nestjs/microservices";
 import {AbiItem} from 'web3-utils';
+import {passwordHashAbi} from "../modules/passwordHash/abi/passwordHash.abi";
 
 export class ConfigService {
     private readonly envConfig: { [key: string]: string };
@@ -25,6 +26,14 @@ export class ConfigService {
                 },
             },
         };
+    }
+
+    public getPasswordHashContractAbi(): AbiItem[] {
+        return passwordHashAbi;
+    }
+
+    public getPasswordHashContractAddress(): string {
+        return this.get('PASSWORD_HASH_CONTRACT_ADDRESS');
     }
 
     public getCidStorageContractAbi(): AbiItem[] {

@@ -14,6 +14,7 @@ import {FileFetcher} from "./fetchers/file.fetcher";
 import {ArchiveService} from "./archive.service";
 import {SoterService} from "./soter.service";
 import {SoterController} from "./soter.controller";
+import {TelegramModule} from "nestjs-telegram";
 // tslint:disable-next-line:no-var-requires
 const https = require('https');
 
@@ -27,6 +28,14 @@ const https = require('https');
                 }),
             }),
             inject: [ConfigService],
+        }),
+        TelegramModule.forRootAsync({
+            useFactory: async (configService: ConfigService) => {
+                return {
+                    botKey: configService.get('TELEGRAM_BOT_KEY')
+                };
+            },
+            inject: [ConfigService]
         }),
     ],
     controllers: [

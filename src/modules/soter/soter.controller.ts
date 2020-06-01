@@ -3,12 +3,20 @@ import {FileInterceptor} from '@nestjs/platform-express';
 import { Response } from 'express';
 import * as fs from 'fs';
 import {FileFetcher} from "./fetchers/file.fetcher";
+import {TelegramService} from "nestjs-telegram";
 
 @Controller('/api/v1/soter')
 export class SoterController {
     constructor(
         private readonly fileFetcher: FileFetcher,
+        private readonly telegram: TelegramService,
     ) {}
+    @Get('/telegram/test')
+    public async telegramTest(@Res() res: Response) {
+        const result = await this.telegram.sendMessage({ chat_id: '-330731984', text: 'Test in Nest js!' }).toPromise();
+        console.log(result);
+        return res.status(200).send({message: 'ok'});
+    }
 
     @Get('/entities/:cid')
     public async getEntities(@Param('cid') cid: string, @Res() res: Response) {
