@@ -21,6 +21,15 @@ export class PasswordHashService {
         );
     }
 
+    public async getFromAddressInTransaction(transactionHash: string) {
+        try {
+            const transaction = await this.web3.eth.getTransaction(transactionHash);
+            return transaction.from;
+        } catch (e) {
+            throw new BadRequestException(e.message);
+        }
+    }
+
     public async getPasswordByTransactionHash(transactionHash: string) {
         try {
             const contract = this.contract();

@@ -18,7 +18,8 @@ export class PasswordHashController {
         @Res() res: Response,
     ) {
         const hash = await this.passwordHashService.getPasswordByTransactionHash(transactionHash);
-        return res.status(200).send({hash});
+        const address = await this.passwordHashService.getFromAddressInTransaction(transactionHash);
+        return res.status(200).send({hash, address});
     }
 
     @Post('/hash/set')
