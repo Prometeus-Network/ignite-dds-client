@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import {KafkaOptions, Transport} from "@nestjs/microservices";
 import {AbiItem} from 'web3-utils';
 import {passwordHashAbi} from "../modules/passwordHash/abi/passwordHash.abi";
+import {passwordHashMainAbi} from "../modules/passwordHash/abi/passwordHashMain.abi";
 
 export class ConfigService {
     private readonly envConfig: { [key: string]: string };
@@ -30,6 +31,14 @@ export class ConfigService {
 
     public getPasswordHashContractAbi(): AbiItem[] {
         return passwordHashAbi;
+    }
+
+    public getPasswordHashMainContractAbi(): AbiItem[] {
+        return passwordHashMainAbi;
+    }
+
+    public getPasswordHashMainContractAddress(): string {
+        return this.get('PASSWORD_HASH_MAIN_NET_CONTRACT_ADDRESS');
     }
 
     public getPasswordHashContractAddress(): string {

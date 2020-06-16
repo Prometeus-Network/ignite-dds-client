@@ -3,13 +3,14 @@ import {PasswordHashDto} from "./dto/passwordHash.dto";
 import {Response} from "express";
 import {NewPasswordHashHandler} from "./useCase/newPasswordHash/newPasswordHash.handler";
 import {PasswordHashService} from "./services/passwordHash.service";
+import {PasswordHashMainService} from "./services/passwordHashMain.service";
 
 @Controller('/api/v1/password')
 export class PasswordHashController {
 
     constructor(
         private readonly handler: NewPasswordHashHandler,
-        private readonly passwordHashService: PasswordHashService,
+        private readonly passwordHashService: PasswordHashMainService,
     ) {}
 
     @Get('/:transactionHash')

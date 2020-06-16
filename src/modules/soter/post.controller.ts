@@ -9,12 +9,12 @@ export class PostController {
         // @Inject('IGNITE_SERVICE') private client: ClientKafka,
         private readonly fileFetcher: FileFetcher,
     ) {}
-
+    //
     // async onModuleInit() {
     //     this.client.subscribeToResponseOf('ignite.posts.add');
     //     await this.client.connect();
     // }
-
+    //
     // @Post('/')
     // public async addPost(
     //     @Body('id') id: string,
