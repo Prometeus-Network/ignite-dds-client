@@ -4,13 +4,14 @@ import {Response} from "express";
 import {NewPasswordHashHandler} from "./useCase/newPasswordHash/newPasswordHash.handler";
 import {PasswordHashService} from "./services/passwordHash.service";
 import {PasswordHashMainService} from "./services/passwordHashMain.service";
+import {PasswordHashContract} from "../binance/contracts/testNet/passwordHash.contract";
 
 @Controller('/api/v1/password')
 export class PasswordHashController {
 
     constructor(
         private readonly handler: NewPasswordHashHandler,
-        private readonly passwordHashService: PasswordHashMainService,
+        private readonly passwordHashService: PasswordHashMainService
     ) {}
 
     @Get('/:transactionHash')

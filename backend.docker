@@ -7,7 +7,7 @@ RUN yarn build
 
 FROM node:10-alpine
 RUN yarn add web3
-
+RUN yarn add javascript-time-ago
 WORKDIR /app
 COPY --from=builder /app ./
 

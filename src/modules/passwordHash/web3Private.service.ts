@@ -11,6 +11,6 @@ export class Web3PrivateService {
     }
 
     public httpInstance(): Web3 {
-        return new Web3(new Web3.providers.HttpProvider(this.config.get('PRIVATE_NETWORK_HOST')));
+        return new Web3(new Web3.providers.HttpProvider(this.config.get('PLASMA_NETWORK')));
     }
 }

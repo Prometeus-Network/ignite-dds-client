@@ -4,7 +4,10 @@ import {KafkaOptions, Transport} from "@nestjs/microservices";
 import {AbiItem} from 'web3-utils';
 import {passwordHashAbi} from "../modules/passwordHash/abi/passwordHash.abi";
 import {passwordHashMainAbi} from "../modules/passwordHash/abi/passwordHashMain.abi";
-
+import {cidStorageAbi} from "./contracts/mainNetwork/cidStorage.abi";
+import {rootChainAbi} from "./contracts/mainNetwork/rootChain.abi";
+import {cidBlockAbi} from "./contracts/plasma/cidBlock.abi";
+import {cidChainAbi} from "./contracts/binance/cidChain.abi";
 export class ConfigService {
     private readonly envConfig: { [key: string]: string };
 
@@ -46,75 +49,38 @@ export class ConfigService {
     }
 
     public getCidStorageContractAbi(): AbiItem[] {
-        return [
-            {
-                "constant": true,
-                "inputs": [],
-                "name": "cidCount",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "allCid",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "string"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "cidIndex",
-                        "type": "uint256"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "cid",
-                        "type": "string"
-                    }
-                ],
-                "name": "CidSaved",
-                "type": "event"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "cid",
-                        "type": "string"
-                    }
-                ],
-                "name": "setCid",
-                "outputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            }
-        ];
+        return cidStorageAbi;
     }
 
     public getCidStorageContractAddress(): string {
         return this.get('CID_STORAGE_CONTRACT_ADDRESS');
+    }
+
+    public getMainNetworkRootChainContractAbi(): AbiItem[] {
+        return rootChainAbi;
+    }
+
+    public getMainNetworkRootChainContractAddress(): string {
+        return this.get('MAIN_NETWORK_ROOT_CHAIN_CONTRACT_ADDRESS');
+    }
+
+    public getPlasmaNetworkCidBlockContractAbi(): AbiItem[] {
+        return cidBlockAbi;
+    }
+
+    getPlasmaNetworkCidBlockContractAddress(): string {
+        return this.get('PLASMA_NETWORK_CID_BLOCK_CONTRACT_ADDRESS');
+    }
+
+    getBinanceTestNetworkCidChainContractAbi(): AbiItem[] {
+        return cidChainAbi;
+    }
+
+    getBinanceTestNetworkCidChainContractAddress(): string {
+        return this.get('CID_CHAIN_CONTRACT_ADDRESS');
+    }
+
+    getBinanceTestNetworkPasswordHashContractAddress(): string {
+        return this.get('BINANCE_TEST_NETWORK_PASSWORD_HASH_CONTRACT_ADDRESS');
     }
 }
