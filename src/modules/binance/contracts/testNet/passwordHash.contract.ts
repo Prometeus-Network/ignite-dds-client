@@ -42,7 +42,9 @@ export class PasswordHashContract {
     }
 
     public async sendEther(sender: string) {
+        const count = await this.web3.eth.getTransactionCount(this.config.get('DEFAULT_ADDRESS'));
         const signedTx = await this.web3.eth.accounts.signTransaction({
+            nonce: count,
             from: this.config.get('DEFAULT_ADDRESS'),
             to: sender,
             value: this.web3.utils.toWei('0.1', 'ether'),
@@ -51,7 +53,7 @@ export class PasswordHashContract {
 
         return this.web3.eth.sendSignedTransaction(signedTx.rawTransaction);
 
-        // return this.web3.eth.se({
+        // return this.web3.eth.sendTransaction({
         //     from: this.config.get('DEFAULT_ADDRESS'),
         //     to: sender,
         //     value: this.web3.utils.toWei('0.1', 'ether')
