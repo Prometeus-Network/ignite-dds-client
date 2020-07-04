@@ -27,9 +27,8 @@ export class CidChainContract {
         return this.instance.methods.cidChain(index).call();
     }
 
-    public async getEvent(btfsCid: string) {
+    public async getEvent() {
         return this.instance.getPastEvents('CidChainBlockPushed', {
-            filter: {btfsCid: btfsCid},
             fromBlock: 0,
             toBlock: 'latest'
         });

@@ -9,7 +9,10 @@ import en from 'javascript-time-ago/locale/en'
 export class RootChainFetcher {
     private timeAgo: TimeAgo;
 
-    constructor(private readonly rootChainContract: RootChainContract) {
+    constructor(
+        private readonly rootChainContract: RootChainContract,
+        private readonly mainNetworkService: MainNetworkService
+    ) {
         TimeAgo.addLocale(en);
         this.timeAgo = new TimeAgo('en-US');
     }
@@ -21,6 +24,8 @@ export class RootChainFetcher {
             return ev.returnValues.verificationHash === tx.verificationHash;
         });
         let date = new Date(tx.createdAt * 1000);
+        const ethTx = await this.mainNetworkService.getTransaction(res.transactionHash);
+        const value = Number(ethTx.value);
         return {
             id: index,
             verificationHash: tx.verificationHash,
@@ -29,6 +34,10 @@ export class RootChainFetcher {
             transactionHash: res.transactionHash,
             address: res.address,
             ago: this.timeAgo.format(date),
+            from: res.from,
+            to: res.to,
+            value: value.toFixed(8),
+            fullTransactionData: ethTx
         };
     }
 
@@ -57,6 +66,8 @@ export class RootChainFetcher {
                 return ev.returnValues.verificationHash === tx.verificationHash;
             });
             let date = new Date(tx.createdAt * 1000);
+            const ethTx = await this.mainNetworkService.getTransaction(res.transactionHash);
+            const value = Number(ethTx.value);
             transactions['data'].push({
                 id: counter,
                 verificationHash: tx.verificationHash,
@@ -64,6 +75,10 @@ export class RootChainFetcher {
                 createdAt: tx.createdAt,
                 transactionHash: res.transactionHash,
                 ago: this.timeAgo.format(date),
+                from: res.from,
+                to: res.to,
+                value: value.toFixed(8),
+                fullTransactionData: ethTx
             });
         }
         return transactions;

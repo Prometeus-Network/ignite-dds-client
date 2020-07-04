@@ -9,4 +9,9 @@ export class PlasmaNetworkService {
     public httpInstance(): Web3 {
         return new Web3(new Web3.providers.HttpProvider(this.config.get('PLASMA_NETWORK')));
     }
+
+    public async getTransaction(transactionHash: string) {
+        const instance = this.httpInstance();
+        return instance.eth.getTransaction(transactionHash);
+    }
 }
