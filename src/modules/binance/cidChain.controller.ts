@@ -6,6 +6,12 @@ import {CidChainFetcher} from "./fetchers/testNet/cidChain.fetcher";
 export class CidChainController {
     constructor(private readonly cidChainFetcher: CidChainFetcher) {}
 
+    @Get('/tx-count')
+    public async getTxCount(@Res() res: Response) {
+        const txCount = await this.cidChainFetcher.getTxCount();
+        return res.status(200).send({txCount});
+    }
+
     @Get('/block/:id')
     public async getOneById(
         @Param('id') id: number,

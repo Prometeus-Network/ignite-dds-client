@@ -16,6 +16,10 @@ export class CidChainFetcher {
         this.timeAgo = new TimeAgo('en-US');
     }
 
+    public async getTxCount() {
+        return this.cidChainContract.getLastPushedBlock();
+    }
+
     public async getBlockById(index: number) {
         const tx = await this.cidChainContract.getCidChainBlock(index);
         let date = new Date(tx.createdAt * 1000);

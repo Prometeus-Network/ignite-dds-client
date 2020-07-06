@@ -17,6 +17,10 @@ export class RootChainFetcher {
         this.timeAgo = new TimeAgo('en-US');
     }
 
+    public async getTxCount() {
+        return this.rootChainContract.getLastVerificationBlock();
+    }
+
     public async getRootChainHashByIndex(index: number) {
         const tx = await this.rootChainContract.getVerificationBlockByIndex(index);
         const event = await this.rootChainContract.getEvent();

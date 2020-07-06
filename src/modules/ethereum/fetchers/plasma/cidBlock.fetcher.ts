@@ -16,6 +16,10 @@ export class CidBlockFetcher {
         this.timeAgo = new TimeAgo('en-US');
     }
 
+    public async getTxCount() {
+        return this.cidBlockContract.getLastCommittedBlock();
+    }
+
     public async getPlasmaBlockById(index: number) {
         const tx = await this.cidBlockContract.getPlasmaBlock(index);
         const event = await this.cidBlockContract.getEvent(tx.btfsCid);

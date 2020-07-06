@@ -27,4 +27,10 @@ export class RootChainController {
         );
         return res.status(200).send(items);
     }
+
+    @Get('/tx-count')
+    public async getTxCount(@Res() res: Response) {
+        const txCount = await this.rootChainFetcher.getTxCount();
+        return res.status(200).send({txCount});
+    }
 }
