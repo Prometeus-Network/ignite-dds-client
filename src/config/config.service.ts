@@ -40,6 +40,83 @@ export class ConfigService {
         return passwordHashMainAbi;
     }
 
+    public getPasswordHashBinanceSmartChainContractAbi(): AbiItem[] {
+        return [
+            {
+                "inputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "internalType": "address",
+                        "name": "sender",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "string",
+                        "name": "hash",
+                        "type": "string"
+                    }
+                ],
+                "name": "PasswordUpdated",
+                "type": "event"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "_sender",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "_hash",
+                        "type": "string"
+                    }
+                ],
+                "name": "setNewPassword",
+                "outputs": [
+                    {
+                        "internalType": "bool",
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "name": "userPassword",
+                "outputs": [
+                    {
+                        "internalType": "string",
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+    }
+
     public getPasswordHashMainContractAddress(): string {
         return this.get('PASSWORD_HASH_MAIN_NET_CONTRACT_ADDRESS');
     }

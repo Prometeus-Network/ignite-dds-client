@@ -25,6 +25,9 @@ export class PasswordHashMainService {
     public async getFromAddressInTransaction(transactionHash: string) {
         try {
             const transaction = await this.web3.eth.getTransaction(transactionHash);
+            if(transaction == null) {
+                return '';
+            }
             return transaction.from;
         } catch (e) {
             throw new BadRequestException(e.message);
@@ -35,6 +38,9 @@ export class PasswordHashMainService {
         try {
             const contract = this.contract();
             const transaction = await this.web3.eth.getTransaction(transactionHash);
+            if(transaction == null) {
+                return '';
+            }
             return contract.methods.userPassword(transaction.from).call();
         } catch (e) {
             throw new BadRequestException(e.message);

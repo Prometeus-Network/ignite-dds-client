@@ -11,16 +11,27 @@ export class PasswordHashController {
 
     constructor(
         private readonly handler: NewPasswordHashHandler,
-        private readonly passwordHashService: PasswordHashMainService
+        private readonly passwordHashService: PasswordHashMainService,
+        private readonly passwordHashServiceBinance: PasswordHashContract
     ) {}
 
-    @Get('/:transactionHash')
-    public async getPasswordByTransactionHash(
+    @Get('/mainnet/:transactionHash')
+    public async getPasswordInMainNetByTransactionHash(
         @Param('transactionHash') transactionHash: string,
         @Res() res: Response,
     ) {
         const hash = await this.passwordHashService.getPasswordByTransactionHash(transactionHash);
         const address = await this.passwordHashService.getFromAddressInTransaction(transactionHash);
+        return res.status(200).send({hash, address});
+    }
+
+    @Get('/binance-smart-chain/:transactionHash')
+    public async getPasswordInBinanceSmartChainByTransactionHash(
+        @Param('transactionHash') transactionHash: string,
+        @Res() res: Response,
+    ) {
+        const hash = await this.passwordHashServiceBinance.getPasswordByTransactionHash(transactionHash);
+        const address = await this.passwordHashServiceBinance.getFromAddressInTransaction(transactionHash);
         return res.status(200).send({hash, address});
     }
 

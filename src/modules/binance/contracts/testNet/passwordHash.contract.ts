@@ -14,7 +14,7 @@ export class PasswordHashContract {
     ) {
         this.web3 = testNetworkService.httpInstance();
         this.instance = new this.web3.eth.Contract(
-            this.config.getPasswordHashMainContractAbi(),
+            this.config.getPasswordHashBinanceSmartChainContractAbi(),
             this.config.getBinanceTestNetworkPasswordHashContractAddress(),
         );
     }

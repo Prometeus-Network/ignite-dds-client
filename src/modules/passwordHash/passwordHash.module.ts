@@ -19,7 +19,7 @@ import {TestNetworkService} from "../binance/services/testNetwork.service";
         Web3MainNetService,
         PasswordHashMainService,
         PasswordHashContract,
-        TestNetworkService
+        TestNetworkService,
     ],
 })
 export class PasswordHashModule {}
