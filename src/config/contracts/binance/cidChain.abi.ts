@@ -1,176 +1,176 @@
-import {AbiItem} from 'web3-utils';
-export const cidChainAbi: AbiItem[] = [
+import {AbiItem} from "web3-utils";
+export const cidChainAbiBinance: AbiItem[] = [
     {
-        'constant': false,
-        'inputs': [
+        "constant": false,
+        "inputs": [
             {
-                'name': 'node',
-                'type': 'address'
+                "name": "node",
+                "type": "address"
             }
         ],
-        'name': 'addToAllowList',
-        'outputs': [],
-        'payable': false,
-        'stateMutability': 'nonpayable',
-        'type': 'function'
+        "name": "addToAllowList",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
     },
     {
-        'constant': false,
-        'inputs': [
+        "constant": false,
+        "inputs": [
             {
-                'name': '_btfsCid',
-                'type': 'string'
+                "name": "_btfsCid",
+                "type": "string"
             }
         ],
-        'name': 'pushBlock',
-        'outputs': [],
-        'payable': false,
-        'stateMutability': 'nonpayable',
-        'type': 'function'
+        "name": "pushBlock",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
     },
     {
-        'constant': false,
-        'inputs': [
+        "constant": false,
+        "inputs": [
             {
-                'name': 'node',
-                'type': 'address'
+                "name": "node",
+                "type": "address"
             }
         ],
-        'name': 'removeInAllowList',
-        'outputs': [],
-        'payable': false,
-        'stateMutability': 'nonpayable',
-        'type': 'function'
+        "name": "removeInAllowList",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
     },
     {
-        'anonymous': false,
-        'inputs': [
+        "anonymous": false,
+        "inputs": [
             {
-                'indexed': false,
-                'name': 'node',
-                'type': 'address'
+                "indexed": false,
+                "name": "node",
+                "type": "address"
             },
             {
-                'indexed': false,
-                'name': 'addedAt',
-                'type': 'uint256'
+                "indexed": false,
+                "name": "addedAt",
+                "type": "uint256"
             }
         ],
-        'name': 'ToAllowListAddressAdded',
-        'type': 'event'
+        "name": "ToAllowListAddressAdded",
+        "type": "event"
     },
     {
-        'anonymous': false,
-        'inputs': [
+        "anonymous": false,
+        "inputs": [
             {
-                'indexed': false,
-                'name': 'node',
-                'type': 'address'
+                "indexed": false,
+                "name": "node",
+                "type": "address"
             },
             {
-                'indexed': false,
-                'name': 'removedAt',
-                'type': 'uint256'
+                "indexed": false,
+                "name": "removedAt",
+                "type": "uint256"
             }
         ],
-        'name': 'InAllowListAddressRemoved',
-        'type': 'event'
+        "name": "InAllowListAddressRemoved",
+        "type": "event"
     },
     {
-        'anonymous': false,
-        'inputs': [
+        "anonymous": false,
+        "inputs": [
             {
-                'indexed': false,
-                'name': 'btfsCid',
-                'type': 'string'
+                "indexed": false,
+                "name": "btfsCid",
+                "type": "string"
             },
             {
-                'indexed': false,
-                'name': 'node',
-                'type': 'address'
+                "indexed": false,
+                "name": "node",
+                "type": "address"
             }
         ],
-        'name': 'CidChainBlockPushed',
-        'type': 'event'
+        "name": "CidChainBlockPushed",
+        "type": "event"
     },
     {
-        'inputs': [],
-        'payable': false,
-        'stateMutability': 'nonpayable',
-        'type': 'constructor'
+        "inputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "constructor"
     },
     {
-        'constant': true,
-        'inputs': [
+        "constant": true,
+        "inputs": [
             {
-                'name': '',
-                'type': 'address'
+                "name": "",
+                "type": "address"
             }
         ],
-        'name': 'allowList',
-        'outputs': [
+        "name": "allowList",
+        "outputs": [
             {
-                'name': '',
-                'type': 'bool'
+                "name": "",
+                "type": "bool"
             }
         ],
-        'payable': false,
-        'stateMutability': 'view',
-        'type': 'function'
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
     },
     {
-        'constant': true,
-        'inputs': [
+        "constant": true,
+        "inputs": [
             {
-                'name': '',
-                'type': 'uint256'
+                "name": "",
+                "type": "uint256"
             }
         ],
-        'name': 'cidChain',
-        'outputs': [
+        "name": "cidChain",
+        "outputs": [
             {
-                'name': 'btfsCid',
-                'type': 'string'
+                "name": "btfsCid",
+                "type": "string"
             },
             {
-                'name': 'node',
-                'type': 'address'
+                "name": "node",
+                "type": "address"
             },
             {
-                'name': 'createdAt',
-                'type': 'uint256'
+                "name": "createdAt",
+                "type": "uint256"
             }
         ],
-        'payable': false,
-        'stateMutability': 'view',
-        'type': 'function'
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
     },
     {
-        'constant': true,
-        'inputs': [],
-        'name': 'lastPushedBlock',
-        'outputs': [
+        "constant": true,
+        "inputs": [],
+        "name": "lastPushedBlock",
+        "outputs": [
             {
-                'name': '',
-                'type': 'uint256'
+                "name": "",
+                "type": "uint256"
             }
         ],
-        'payable': false,
-        'stateMutability': 'view',
-        'type': 'function'
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
     },
     {
-        'constant': true,
-        'inputs': [],
-        'name': 'validator',
-        'outputs': [
+        "constant": true,
+        "inputs": [],
+        "name": "validator",
+        "outputs": [
             {
-                'name': '',
-                'type': 'address'
+                "name": "",
+                "type": "address"
             }
         ],
-        'payable': false,
-        'stateMutability': 'view',
-        'type': 'function'
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
     }
 ];

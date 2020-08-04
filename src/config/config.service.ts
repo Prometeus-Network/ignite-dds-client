@@ -7,7 +7,8 @@ import {passwordHashMainAbi} from "../modules/passwordHash/abi/passwordHashMain.
 import {cidStorageAbi} from "./contracts/mainNetwork/cidStorage.abi";
 import {rootChainAbi} from "./contracts/mainNetwork/rootChain.abi";
 import {cidBlockAbi} from "./contracts/plasma/cidBlock.abi";
-import {cidChainAbi} from "./contracts/binance/cidChain.abi";
+import {cidChainAbiBinance} from "./contracts/binance/cidChain.abi";
+import {passwordHashAbiBinance} from "./contracts/binance/passwordHash.abi";
 export class ConfigService {
     private readonly envConfig: { [key: string]: string };
 
@@ -19,7 +20,7 @@ export class ConfigService {
         return this.envConfig[key];
     }
 
-    getKafkaOptions(): KafkaOptions {
+    public getKafkaOptions(): KafkaOptions {
         return {
             transport: Transport.KAFKA,
             options: {
@@ -38,83 +39,6 @@ export class ConfigService {
 
     public getPasswordHashMainContractAbi(): AbiItem[] {
         return passwordHashMainAbi;
-    }
-
-    public getPasswordHashBinanceSmartChainContractAbi(): AbiItem[] {
-        return [
-            {
-                "inputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "constructor"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "internalType": "address",
-                        "name": "sender",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "string",
-                        "name": "hash",
-                        "type": "string"
-                    }
-                ],
-                "name": "PasswordUpdated",
-                "type": "event"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "_sender",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "_hash",
-                        "type": "string"
-                    }
-                ],
-                "name": "setNewPassword",
-                "outputs": [
-                    {
-                        "internalType": "bool",
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "name": "userPassword",
-                "outputs": [
-                    {
-                        "internalType": "string",
-                        "name": "",
-                        "type": "string"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            }
-        ];
     }
 
     public getPasswordHashMainContractAddress(): string {
@@ -140,24 +64,29 @@ export class ConfigService {
     public getMainNetworkRootChainContractAddress(): string {
         return this.get('MAIN_NETWORK_ROOT_CHAIN_CONTRACT_ADDRESS');
     }
-
+    // Plasma config
     public getPlasmaNetworkCidBlockContractAbi(): AbiItem[] {
         return cidBlockAbi;
     }
 
-    getPlasmaNetworkCidBlockContractAddress(): string {
+    public getPlasmaNetworkCidBlockContractAddress(): string {
         return this.get('PLASMA_NETWORK_CID_BLOCK_CONTRACT_ADDRESS');
     }
 
-    getBinanceTestNetworkCidChainContractAbi(): AbiItem[] {
-        return cidChainAbi;
+    //    Binance Config
+    public getBinanceCidChainContractAbi(): AbiItem[] {
+        return cidChainAbiBinance;
     }
 
-    getBinanceTestNetworkCidChainContractAddress(): string {
-        return this.get('CID_CHAIN_CONTRACT_ADDRESS');
+    public getBinanceCidChainContractAddress(): string {
+        return this.get('BINANCE_CID_CHAIN_ADDRESS');
     }
 
-    getBinanceTestNetworkPasswordHashContractAddress(): string {
+    public getPasswordHashBinanceSmartChainContractAbi(): AbiItem[] {
+        return passwordHashAbiBinance;
+    }
+
+    public getBinanceTestNetworkPasswordHashContractAddress(): string {
         return this.get('BINANCE_TEST_NETWORK_PASSWORD_HASH_CONTRACT_ADDRESS');
     }
 }

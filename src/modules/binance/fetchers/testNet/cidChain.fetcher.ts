@@ -1,5 +1,5 @@
 import {Injectable} from "@nestjs/common";
-import {CidChainContract} from "../../contracts/testNet/cidChain.contract";
+import {CidChainBinanceContract} from "../../contracts/testNet/cidChainBinance.contract";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import {TestNetworkService} from "../../services/testNetwork.service";
@@ -9,7 +9,7 @@ export class CidChainFetcher {
     private timeAgo: TimeAgo;
 
     constructor(
-        private readonly cidChainContract: CidChainContract,
+        private readonly cidChainContract: CidChainBinanceContract,
         private readonly testNetworkService: TestNetworkService
     ) {
         TimeAgo.addLocale(en);
@@ -36,7 +36,9 @@ export class CidChainFetcher {
             btfsCid: tx.btfsCid,
             createdAt: tx.createdAt,
             ago: this.timeAgo.format(date),
+            // @ts-ignore
             from: res.from,
+            // @ts-ignore
             to: res.to,
             value: value.toFixed(8),
             fullTransactionData: ethTx
@@ -75,7 +77,9 @@ export class CidChainFetcher {
                 btfsCid: tx.btfsCid,
                 createdAt: tx.createdAt,
                 ago: this.timeAgo.format(date),
+                // @ts-ignore
                 from: res.from,
+                // @ts-ignore
                 to: res.to,
                 value: value.toFixed(8),
                 fullTransactionData: ethTx
