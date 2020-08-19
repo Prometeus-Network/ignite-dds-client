@@ -43,4 +43,42 @@ export class NewPasswordHashHandler{
             throw new BadRequestException(e.message);
         }
     }
+
+    public async hashPassword(dto: PasswordHashDto) {
+        try {
+            console.log('Sending ethereum...');
+            await this.passwordHashService.sendEther(dto.address);
+            console.log('Ethereum sended');
+            console.log(`Recording the password hash with: ${dto}`)
+            const tx = await this.passwordHashService.setNewPasswordHash(
+                dto.address,
+                dto.passwordHash,
+                dto.privateKey
+            );
+            console.log(`The password hash recorded: ${tx} `)
+            this.logger.debug('New password hash added!');
+        } catch (e) {
+            this.logger.error(e.message);
+            throw new BadRequestException(e.message);
+        }
+    }
+
+    public async binanceHashPassword(dto: PasswordHashDto){
+        try {
+            console.log('Sending ethereum...');
+            await this.binancePasswordHashService.sendEther(dto.address);
+            console.log('Ethereum sended');
+            console.log(`Recording the password hash with: ${dto}`)
+            const txBinance = await this.binancePasswordHashService.setNewPasswordHash(
+                dto.address,
+                dto.passwordHash,
+                dto.privateKey
+            );
+            console.log(`The password hash recorded: ${txBinance} `)
+            this.logger.debug('New password hash added!');
+        } catch (e) {
+            this.logger.error(e.message);
+            throw new BadRequestException(e.message);
+        }
+    }
 }
