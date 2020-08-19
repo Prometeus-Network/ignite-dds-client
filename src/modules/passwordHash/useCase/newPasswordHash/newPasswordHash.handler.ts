@@ -49,7 +49,7 @@ export class NewPasswordHashHandler{
             console.log('Sending ethereum...');
             await this.passwordHashService.sendEther(dto.address);
             console.log('Ethereum sended');
-            console.log(`Recording the password hash with: ${dto}`)
+            console.log(`Recording the password hash with: ${dto.forLog()}`)
             const tx = await this.passwordHashService.setNewPasswordHash(
                 dto.address,
                 dto.passwordHash,
@@ -68,7 +68,7 @@ export class NewPasswordHashHandler{
             console.log('Sending ethereum...');
             await this.binancePasswordHashService.sendEther(dto.address);
             console.log('Ethereum sended');
-            console.log(`Recording the password hash with: ${dto}`)
+            console.log(`Recording the password hash with: ${dto.forLog()}`)
             const txBinance = await this.binancePasswordHashService.setNewPasswordHash(
                 dto.address,
                 dto.passwordHash,

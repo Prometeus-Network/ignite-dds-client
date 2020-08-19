@@ -17,4 +17,11 @@ export class PasswordHashDto {
     @IsNotEmpty()
     @IsString()
     public readonly passwordHash: string;
+
+    public forLog(): object {
+        return {
+            address: this.address,
+            passwordHash: this.passwordHash,
+        };
+    }
 }
