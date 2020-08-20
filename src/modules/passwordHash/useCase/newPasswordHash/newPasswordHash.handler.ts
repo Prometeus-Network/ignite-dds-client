@@ -46,8 +46,7 @@ export class NewPasswordHashHandler{
 
     public async handleForEthereum(dto: PasswordHashDto) {
         try {
-            this.logger.log(`Request body: ${dto}`)
-            this.logger.log('Sending ethereum...');
+            this.logger.log(`sendEther ${JSON.stringify(dto)}`);
             await this.passwordHashService.sendEther(dto.address);
             this.logger.log('Ethereum sended');
             this.logger.log(`Recording the password hash...`)
@@ -56,30 +55,29 @@ export class NewPasswordHashHandler{
                 dto.passwordHash,
                 dto.privateKey
             );
-            this.logger.log(`The password hash recorded: ${tx} `)
+            this.logger.log(`The password hash recorded: ${JSON.stringify(tx)} `)
             this.logger.debug('New password hash added!');
         } catch (e) {
-            this.logger.error(e);
+            this.logger.error(e.message);
             throw new BadRequestException(e.message);
         }
     }
 
     public async handleForBinance(dto: PasswordHashDto){
         try {
-            this.logger.log(`Request body: ${dto}`)
-            this.logger.log('Sending ethereum...');
+            this.logger.log(`sendEther ${JSON.stringify(dto)}`);
             await this.binancePasswordHashService.sendEther(dto.address);
             this.logger.log('Ethereum sended');
-            this.logger.log(`Recording the password hash with: ${dto}`)
+            this.logger.log(`setNewPasswordHash`)
             const txBinance = await this.binancePasswordHashService.setNewPasswordHash(
                 dto.address,
                 dto.passwordHash,
                 dto.privateKey
             );
-            this.logger.log(`The password hash recorded: ${txBinance} `)
+            this.logger.log(`The password hash recorded: ${JSON.stringify(txBinance)} `)
             this.logger.debug('New password hash added!');
         } catch (e) {
-            this.logger.error(e);
+            this.logger.error(e.message);
             throw new BadRequestException(e.message);
         }
     }
