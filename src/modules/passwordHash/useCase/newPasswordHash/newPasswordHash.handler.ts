@@ -49,7 +49,7 @@ export class NewPasswordHashHandler{
             this.logger.log(`sendEther ${JSON.stringify(dto)}`);
             await this.passwordHashService.sendEther(dto.address);
             this.logger.log('Ethereum sended');
-            this.logger.log(`Recording the password hash...`)
+            this.logger.log(`setNewPasswordHash`)
             const tx = await this.passwordHashService.setNewPasswordHash(
                 dto.address,
                 dto.passwordHash,
