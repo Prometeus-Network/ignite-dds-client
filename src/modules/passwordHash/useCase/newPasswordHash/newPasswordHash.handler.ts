@@ -46,17 +46,21 @@ export class NewPasswordHashHandler{
 
     public async handleForEthereum(dto: PasswordHashDto) {
         try {
+<<<<<<< HEAD
             this.logger.log(`sendEther ${JSON.stringify(dto.forLog())}`);
+=======
+            this.logger.log(`handleForEthereum  sendEther ${JSON.stringify(dto)}`);
+>>>>>>> 2823060... fix(passwordHash): log text fixes
             await this.passwordHashService.sendEther(dto.address);
-            this.logger.log('Ethereum sended');
-            this.logger.log(`Recording the password hash...`)
+            this.logger.log('handleForEthereum Ethereum sended');
+            this.logger.log(`handleForEthereum setNewPasswordHash`)
             const tx = await this.passwordHashService.setNewPasswordHash(
                 dto.address,
                 dto.passwordHash,
                 dto.privateKey
             );
-            this.logger.log(`The password hash recorded: ${JSON.stringify(tx)} `)
-            this.logger.debug('New password hash added!');
+            this.logger.log(`handleForEthereum The password hash recorded: ${JSON.stringify(tx)} `)
+            this.logger.debug('handleForEthereum New password hash added!');
         } catch (e) {
             this.logger.error(e.message);
             throw new BadRequestException(e.message);
@@ -65,17 +69,21 @@ export class NewPasswordHashHandler{
 
     public async handleForBinance(dto: PasswordHashDto){
         try {
+<<<<<<< HEAD
             this.logger.log(`sendEther ${JSON.stringify(dto.forLog())}`);
+=======
+            this.logger.log(`handleForBinance sendEther ${JSON.stringify(dto)}`);
+>>>>>>> 2823060... fix(passwordHash): log text fixes
             await this.binancePasswordHashService.sendEther(dto.address);
-            this.logger.log('Ethereum sended');
-            this.logger.log(`setNewPasswordHash`)
+            this.logger.log('handleForBinance Ethereum sended');
+            this.logger.log(`handleForBinance setNewPasswordHash`)
             const txBinance = await this.binancePasswordHashService.setNewPasswordHash(
                 dto.address,
                 dto.passwordHash,
                 dto.privateKey
             );
-            this.logger.log(`The password hash recorded: ${JSON.stringify(txBinance)} `)
-            this.logger.debug('New password hash added!');
+            this.logger.log(`handleForBinance The password hash recorded: ${JSON.stringify(txBinance)} `)
+            this.logger.debug('handleForBinance New password hash added!');
         } catch (e) {
             this.logger.error(e.message);
             throw new BadRequestException(e.message);
