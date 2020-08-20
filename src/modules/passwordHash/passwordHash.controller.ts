@@ -44,7 +44,7 @@ export class PasswordHashController {
         return res.status(200).send({message: 'To new hash success changed!'});
     }
 
-    @Post('/hash/change')
+    @Post('/hash/set-to-ethereum')
     public async setPasswordHash(
         @Body() changePasswordDto: PasswordHashDto,
         @Res() res: Response,
@@ -53,7 +53,7 @@ export class PasswordHashController {
         return res.status(200).send({message: 'To new hash success changed!'});
     }
 
-    @Post('/hash/change-binance')
+    @Post('/hash/set-to-binance')
     public async setBinancePasswordHash(
         @Body() changePasswordDto: PasswordHashDto,
         @Res() res: Response,
