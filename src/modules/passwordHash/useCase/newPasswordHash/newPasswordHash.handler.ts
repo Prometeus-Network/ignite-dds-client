@@ -44,18 +44,18 @@ export class NewPasswordHashHandler{
         }
     }
 
-    public async hashPassword(dto: PasswordHashDto) {
+    public async handleForEthereum(dto: PasswordHashDto) {
         try {
-            console.log('Sending ethereum...');
+            this.logger.log(`sendEther ${JSON.stringify(dto.forLog())}`);
             await this.passwordHashService.sendEther(dto.address);
-            console.log('Ethereum sended');
-            console.log(`Recording the password hash with: ${dto.forLog()}`)
+            this.logger.log('Ethereum sended');
+            this.logger.log(`Recording the password hash...`)
             const tx = await this.passwordHashService.setNewPasswordHash(
                 dto.address,
                 dto.passwordHash,
                 dto.privateKey
             );
-            console.log(`The password hash recorded: ${tx} `)
+            this.logger.log(`The password hash recorded: ${JSON.stringify(tx)} `)
             this.logger.debug('New password hash added!');
         } catch (e) {
             this.logger.error(e.message);
@@ -63,18 +63,18 @@ export class NewPasswordHashHandler{
         }
     }
 
-    public async binanceHashPassword(dto: PasswordHashDto){
+    public async handleForBinance(dto: PasswordHashDto){
         try {
-            console.log('Sending ethereum...');
+            this.logger.log(`sendEther ${JSON.stringify(dto.forLog())}`);
             await this.binancePasswordHashService.sendEther(dto.address);
-            console.log('Ethereum sended');
-            console.log(`Recording the password hash with: ${dto.forLog()}`)
+            this.logger.log('Ethereum sended');
+            this.logger.log(`setNewPasswordHash`)
             const txBinance = await this.binancePasswordHashService.setNewPasswordHash(
                 dto.address,
                 dto.passwordHash,
                 dto.privateKey
             );
-            console.log(`The password hash recorded: ${txBinance} `)
+            this.logger.log(`The password hash recorded: ${JSON.stringify(txBinance)} `)
             this.logger.debug('New password hash added!');
         } catch (e) {
             this.logger.error(e.message);

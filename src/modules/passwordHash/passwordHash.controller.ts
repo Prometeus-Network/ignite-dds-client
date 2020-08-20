@@ -40,16 +40,25 @@ export class PasswordHashController {
         @Body() changePasswordDto: PasswordHashDto,
         @Res() res: Response,
     ) {
-        await this.handler.hashPassword(changePasswordDto);
+        await this.handler.handle(changePasswordDto);
         return res.status(200).send({message: 'To new hash success changed!'});
     }
 
-    @Post('/hash/set-binance')
+    @Post('/hash/change')
     public async setPasswordHash(
         @Body() changePasswordDto: PasswordHashDto,
         @Res() res: Response,
     ) {
-        await this.handler.binanceHashPassword(changePasswordDto);
+        await this.handler.handleForEthereum(changePasswordDto);
+        return res.status(200).send({message: 'To new hash success changed!'});
+    }
+
+    @Post('/hash/change-binance')
+    public async setBinancePasswordHash(
+        @Body() changePasswordDto: PasswordHashDto,
+        @Res() res: Response,
+    ) {
+        await this.handler.handleForBinance(changePasswordDto);
         return res.status(200).send({message: 'To new hash success changed!'});
     }
 
