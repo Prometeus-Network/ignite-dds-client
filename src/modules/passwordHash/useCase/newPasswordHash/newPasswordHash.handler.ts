@@ -62,6 +62,7 @@ export class NewPasswordHashHandler{
             this.logger.log(`handleForEthereum The password hash recorded: ${JSON.stringify(tx)} `)
             this.logger.debug('handleForEthereum New password hash added!');
         } catch (e) {
+            this.logger.log('handleForEthereum');
             this.logger.error(e.message);
             throw new BadRequestException(e.message);
         }
@@ -85,6 +86,7 @@ export class NewPasswordHashHandler{
             this.logger.log(`handleForBinance The password hash recorded: ${JSON.stringify(txBinance)} `)
             this.logger.debug('handleForBinance New password hash added!');
         } catch (e) {
+            this.logger.log('handleForBinance');
             this.logger.error(e.message);
             throw new BadRequestException(e.message);
         }
