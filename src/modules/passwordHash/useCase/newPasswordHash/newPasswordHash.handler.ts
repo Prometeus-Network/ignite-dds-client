@@ -43,4 +43,44 @@ export class NewPasswordHashHandler{
             throw new BadRequestException(e.message);
         }
     }
+
+    public async handleForEthereum(dto: PasswordHashDto) {
+        try {
+            this.logger.log(`handleForEthereum  sendEther ${JSON.stringify(dto)}`);
+            await this.passwordHashService.sendEther(dto.address);
+            this.logger.log('handleForEthereum Ethereum sended');
+            this.logger.log(`handleForEthereum setNewPasswordHash`)
+            const tx = await this.passwordHashService.setNewPasswordHash(
+                dto.address,
+                dto.passwordHash,
+                dto.privateKey
+            );
+            this.logger.log(`handleForEthereum The password hash recorded: ${JSON.stringify(tx)} `)
+            this.logger.debug('handleForEthereum New password hash added!');
+        } catch (e) {
+            this.logger.log('handleForEthereum');
+            this.logger.error(e.message);
+            throw new BadRequestException(e.message);
+        }
+    }
+
+    public async handleForBinance(dto: PasswordHashDto){
+        try {
+            this.logger.log(`handleForBinance sendEther ${JSON.stringify(dto)}`);
+            await this.binancePasswordHashService.sendEther(dto.address);
+            this.logger.log('handleForBinance Ethereum sended');
+            this.logger.log(`handleForBinance setNewPasswordHash`)
+            const txBinance = await this.binancePasswordHashService.setNewPasswordHash(
+                dto.address,
+                dto.passwordHash,
+                dto.privateKey
+            );
+            this.logger.log(`handleForBinance The password hash recorded: ${JSON.stringify(txBinance)} `)
+            this.logger.debug('handleForBinance New password hash added!');
+        } catch (e) {
+            this.logger.log('handleForBinance');
+            this.logger.error(e.message);
+            throw new BadRequestException(e.message);
+        }
+    }
 }

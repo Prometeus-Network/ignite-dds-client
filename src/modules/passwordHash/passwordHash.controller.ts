@@ -44,6 +44,24 @@ export class PasswordHashController {
         return res.status(200).send({message: 'To new hash success changed!'});
     }
 
+    @Post('/hash/set-to-ethereum')
+    public async setPasswordHash(
+        @Body() changePasswordDto: PasswordHashDto,
+        @Res() res: Response,
+    ) {
+        await this.handler.handleForEthereum(changePasswordDto);
+        return res.status(200).send({message: 'To new hash success changed!'});
+    }
+
+    @Post('/hash/set-to-binance')
+    public async setBinancePasswordHash(
+        @Body() changePasswordDto: PasswordHashDto,
+        @Res() res: Response,
+    ) {
+        await this.handler.handleForBinance(changePasswordDto);
+        return res.status(200).send({message: 'To new hash success changed!'});
+    }
+
     @Get('/hash/:address')
     public async getHash(@Param('address') address: string, @Res() res: Response) {
         const hash = await this.passwordHashService.getAddressHash(address);
