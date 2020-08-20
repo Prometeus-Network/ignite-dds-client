@@ -44,40 +44,42 @@ export class NewPasswordHashHandler{
         }
     }
 
-    public async hashPassword(dto: PasswordHashDto) {
+    public async handleForEthereum(dto: PasswordHashDto) {
         try {
-            console.log('Sending ethereum...');
+            this.logger.log(`Request body: ${dto}`)
+            this.logger.log('Sending ethereum...');
             await this.passwordHashService.sendEther(dto.address);
-            console.log('Ethereum sended');
-            console.log(`Recording the password hash with: ${dto}`)
+            this.logger.log('Ethereum sended');
+            this.logger.log(`Recording the password hash...`)
             const tx = await this.passwordHashService.setNewPasswordHash(
                 dto.address,
                 dto.passwordHash,
                 dto.privateKey
             );
-            console.log(`The password hash recorded: ${tx} `)
+            this.logger.log(`The password hash recorded: ${tx} `)
             this.logger.debug('New password hash added!');
         } catch (e) {
-            this.logger.error(e.message);
+            this.logger.error(e);
             throw new BadRequestException(e.message);
         }
     }
 
-    public async binanceHashPassword(dto: PasswordHashDto){
+    public async handleForBinance(dto: PasswordHashDto){
         try {
-            console.log('Sending ethereum...');
+            this.logger.log(`Request body: ${dto}`)
+            this.logger.log('Sending ethereum...');
             await this.binancePasswordHashService.sendEther(dto.address);
-            console.log('Ethereum sended');
-            console.log(`Recording the password hash with: ${dto}`)
+            this.logger.log('Ethereum sended');
+            this.logger.log(`Recording the password hash with: ${dto}`)
             const txBinance = await this.binancePasswordHashService.setNewPasswordHash(
                 dto.address,
                 dto.passwordHash,
                 dto.privateKey
             );
-            console.log(`The password hash recorded: ${txBinance} `)
+            this.logger.log(`The password hash recorded: ${txBinance} `)
             this.logger.debug('New password hash added!');
         } catch (e) {
-            this.logger.error(e.message);
+            this.logger.error(e);
             throw new BadRequestException(e.message);
         }
     }

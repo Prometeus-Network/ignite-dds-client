@@ -49,7 +49,7 @@ export class PasswordHashController {
         @Body() changePasswordDto: PasswordHashDto,
         @Res() res: Response,
     ) {
-        await this.handler.hashPassword(changePasswordDto);
+        await this.handler.handleForEthereum(changePasswordDto);
         return res.status(200).send({message: 'To new hash success changed!'});
     }
 
@@ -58,7 +58,7 @@ export class PasswordHashController {
         @Body() changePasswordDto: PasswordHashDto,
         @Res() res: Response,
     ) {
-        await this.handler.binanceHashPassword(changePasswordDto);
+        await this.handler.handleForBinance(changePasswordDto);
         return res.status(200).send({message: 'To new hash success changed!'});
     }
 
