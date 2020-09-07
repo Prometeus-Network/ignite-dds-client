@@ -9,7 +9,7 @@ export class CidChainController {
     @Get('/tx-count')
     public async getTxCount(@Res() res: Response) {
         const txCount = await this.cidChainFetcher.getTxCount();
-        return res.status(200).send({txCount: 9781});
+        return res.status(200).send({txCount});
     }
 
     @Get('/block/:id')
