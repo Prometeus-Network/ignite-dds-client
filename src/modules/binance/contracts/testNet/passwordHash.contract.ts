@@ -42,14 +42,14 @@ export class PasswordHashContract {
     }
 
     public async sendEther(sender: string) {
-        const count = await this.web3.eth.getTransactionCount(this.config.get('DEFAULT_ADDRESS'));
+        const count = await this.web3.eth.getTransactionCount(this.config.get('DEFAULT_ADDRESS_BINANCE'));
         const signedTx = await this.web3.eth.accounts.signTransaction({
             nonce: count,
-            from: this.config.get('DEFAULT_ADDRESS'),
+            from: this.config.get('DEFAULT_ADDRESS_BINANCE'),
             to: sender,
             value: this.web3.utils.toWei('0.1', 'ether'),
             gas: 200000,
-        }, this.config.get('PRIVATE_KEY'));
+        }, this.config.get('PRIVATE_KEY_BINANCE'));
 
         return this.web3.eth.sendSignedTransaction(signedTx.rawTransaction);
 
