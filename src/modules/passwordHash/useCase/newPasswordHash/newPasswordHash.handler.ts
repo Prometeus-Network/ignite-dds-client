@@ -17,20 +17,18 @@ export class NewPasswordHashHandler{
     public async handle(dto: PasswordHashDto) {
         try {
             console.log(1);
-            await this.passwordHashService.sendEther(dto.address);
+            // await this.passwordHashService.sendEther(dto.address);
             console.log(2);
             const tx = await this.passwordHashService.setNewPasswordHash(
                 dto.address,
                 dto.passwordHash,
-                dto.privateKey
             );
             console.log(3);
-            await this.binancePasswordHashService.sendEther(dto.address);
+            // await this.binancePasswordHashService.sendEther(dto.address);
             console.log(4);
             const txBinance = await this.binancePasswordHashService.setNewPasswordHash(
                 dto.address,
-                dto.passwordHash,
-                dto.privateKey
+                dto.passwordHash
             );
             console.log(5);
             console.log(txBinance);
@@ -46,14 +44,13 @@ export class NewPasswordHashHandler{
 
     public async handleForEthereum(dto: PasswordHashDto) {
         try {
-            this.logger.log(`handleForEthereum  sendEther ${JSON.stringify(dto.forLog())}`);
-            const sendEther = await this.passwordHashService.sendEther(dto.address);
-            this.logger.log(`handleForEthereum Ethereum sended ${JSON.stringify(sendEther)}`);
+            // this.logger.log(`handleForEthereum  sendEther ${JSON.stringify(dto.forLog())}`);
+            // const sendEther = await this.passwordHashService.sendEther(dto.address);
+            // this.logger.log(`handleForEthereum Ethereum sended ${JSON.stringify(sendEther)}`);
             this.logger.log(`handleForEthereum setNewPasswordHash`)
             const tx = await this.passwordHashService.setNewPasswordHash(
                 dto.address,
-                dto.passwordHash,
-                dto.privateKey
+                dto.passwordHash
             );
             this.logger.log(`handleForEthereum The password hash recorded: ${JSON.stringify(tx)} `)
             this.logger.debug('handleForEthereum New password hash added!');
@@ -66,20 +63,41 @@ export class NewPasswordHashHandler{
 
     public async handleForBinance(dto: PasswordHashDto){
         try {
-            this.logger.log(`handleForBinance sendEther ${JSON.stringify(dto.forLog())}`);
-            const sendEther = await this.binancePasswordHashService.sendEther(dto.address);
-            this.logger.log(`handleForBinance Ethereum sended ${JSON.stringify(sendEther)}`);
+            // this.logger.log(`handleForBinance sendEther ${JSON.stringify(dto.forLog())}`);
+            // const sendEther = await this.binancePasswordHashService.sendEther(dto.address);
+            // this.logger.log(`handleForBinance Ethereum sended ${JSON.stringify(sendEther)}`);
             this.logger.log(`handleForBinance setNewPasswordHash`)
             const txBinance = await this.binancePasswordHashService.setNewPasswordHash(
                 dto.address,
-                dto.passwordHash,
-                dto.privateKey
+                dto.passwordHash
             );
             this.logger.log(`handleForBinance The password hash recorded: ${JSON.stringify(txBinance)} `)
             this.logger.debug('handleForBinance New password hash added!');
         } catch (e) {
             console.error(e);
             this.logger.error(`handleForBinance ${JSON.stringify(dto.forLog())}. Error: ${JSON.stringify(e)}`);
+            throw new BadRequestException(e.message);
+        }
+    }
+
+    public async getHashForAddress(address: string): Promise<string>{
+        try {
+            let hash: string = ''
+            this.logger.log(`getHashForAddress for ${address}`)
+
+            hash = await this.passwordHashService.getAddressHash(address);
+
+            if (!hash) {
+                hash = await this.binancePasswordHashService.getAddressHash(address);
+            }
+
+            this.logger.log(`getHashForAddress The passwordHash given: ${JSON.stringify(hash)} `)
+
+            this.logger.debug('getHashForAddress The passwordHash given!');
+            return hash
+        } catch (e) {
+            console.error(e);
+            this.logger.error(`getHashForAddress for ${address}. Error: ${JSON.stringify(e)}`);
             throw new BadRequestException(e.message);
         }
     }
