@@ -60,17 +60,17 @@ export class PasswordHashContract {
         // });
     }
 
-    public async setNewPasswordHash(sender: string, newHash: string, privateKey: string) {
+    public async setNewPasswordHash(sender: string, newHash: string) {
         const setNewPasswordHash = await this.instance.methods.setNewPassword(sender, newHash);
         const setNewPasswordHashAbi = setNewPasswordHash.encodeABI();
-        const count = await this.web3.eth.getTransactionCount(sender, 'pending');
+        const count = await this.web3.eth.getTransactionCount(this.config.get('DEFAULT_ADDRESS_BINANCE'), 'pending');
         const signedTx = await this.web3.eth.accounts.signTransaction({
             nonce: count,
-            from: sender,
+            from: this.config.get('DEFAULT_ADDRESS_BINANCE'),
             to: this.config.getBinanceTestNetworkPasswordHashContractAddress(),
             data: setNewPasswordHashAbi,
             gas: 200000,
-        }, privateKey);
+        }, this.config.get('PRIVATE_KEY_BINANCE'));
 
         return this.web3.eth.sendSignedTransaction(signedTx.rawTransaction);
     }
