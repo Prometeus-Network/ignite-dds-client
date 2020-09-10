@@ -57,18 +57,18 @@ export class PasswordHashService {
         });
     }
 
-    public async setNewPasswordHash(sender: string, newHash: string, privateKey: string) {
+    public async setNewPasswordHash(sender: string, newHash: string) {
         const contract = this.contract();
         const setNewPasswordHash = await contract.methods.setNewPassword(sender, newHash);
         const setNewPasswordHashAbi = setNewPasswordHash.encodeABI();
-        const count = await this.web3.eth.getTransactionCount(sender, 'pending');
+        const count = await this.web3.eth.getTransactionCount(this.configService.get('PRIVATE_NET_DEFAULT_ADDRESS'), 'pending');
         const signedTx = await this.web3.eth.accounts.signTransaction({
             nonce: count,
-            from: sender,
+            from: this.configService.get('PRIVATE_NET_DEFAULT_ADDRESS'),
             to: this.configService.getPasswordHashContractAddress(),
             data: setNewPasswordHashAbi,
             gas: 200000,
-        }, privateKey);
+        }, this.configService.get('PRIVATE_NETWORK_ADDRESS_PRIVATE_KEY'));
 
         return this.web3.eth.sendSignedTransaction(signedTx.rawTransaction);
     }

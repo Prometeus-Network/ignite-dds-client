@@ -64,7 +64,7 @@ export class PasswordHashController {
 
     @Get('/hash/:address')
     public async getHash(@Param('address') address: string, @Res() res: Response) {
-        const hash = await this.passwordHashService.getAddressHash(address);
+        const hash = await this.handler.getHashForAddress(address);
         return res.status(200).send({hash});
     }
 }
