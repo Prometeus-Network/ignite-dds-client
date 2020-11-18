@@ -37,8 +37,15 @@ export class PasswordHashController {
 
     @Get('/by-tx/:transactionHash')
     public async getPasswordByTx(@Param('transactionHash') transactionHash: string, @Res() res: Response) {
-      const { address, hash } = await this.handler.getPasswordForTransactionHash(transactionHash);
-      return res.status(200).send({ hash, address });
+        let hash = await this.passwordHashService.getPasswordByTransactionHash(transactionHash);
+        let address = await this.passwordHashService.getFromAddressInTransaction(transactionHash);
+
+        if (!hash) {
+            hash = await this.passwordHashServiceBinance.getPasswordByTransactionHash(transactionHash);
+            address = await this.passwordHashServiceBinance.getFromAddressInTransaction(transactionHash);
+        }
+
+        return res.status(200).send({ hash, address });
     }
 
     @Post('/hash/set')
