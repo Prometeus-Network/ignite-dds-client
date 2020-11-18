@@ -101,36 +101,4 @@ export class NewPasswordHashHandler{
             throw new BadRequestException(e.message);
         }
     }
-
-    public async getPasswordForTransactionHash(transactionHash: string): Promise<{ address: string; hash: string }>{
-        try {
-            let address: string = '';
-            let hash: string = '';
-            this.logger.log(`getHashForTransactionHash for ${transactionHash}`);
-
-            try {
-                address = await this.passwordHashService.getFromAddressInTransaction(transactionHash);
-                hash = await this.passwordHashService.getAddressHash(address);
-            } catch (e) {
-                try {
-                    address = await this.binancePasswordHashService.getFromAddressInTransaction(transactionHash)
-                    hash = await this.binancePasswordHashService.getAddressHash(address);
-                } catch (e) {
-                    console.error(e);
-                    this.logger.error(`getPasswordForTransactionHash for ${transactionHash}. Error: ${JSON.stringify(e)}`);
-                    throw new BadRequestException('not found');
-                }
-            }
-
-            this.logger.log(`getPasswordForTransactionHash The address given: ${JSON.stringify(address)} `);
-            this.logger.log(`getPasswordForTransactionHash The passwordHash given: ${JSON.stringify(hash)} `);
-
-            this.logger.debug('getPasswordForTransactionHash The passwordHash given!');
-            return { address, hash };
-        } catch (e) {
-            console.error(e);
-            this.logger.error(`getPasswordForTransactionHash for ${transactionHash}. Error: ${JSON.stringify(e)}`);
-            throw new BadRequestException(e.message);
-        }
-    }
 }
