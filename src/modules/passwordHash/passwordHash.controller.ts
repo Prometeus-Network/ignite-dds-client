@@ -35,6 +35,12 @@ export class PasswordHashController {
         return res.status(200).send({hash, address});
     }
 
+    @Get('/by-tx/:transactionHash')
+    public async getPasswordByTx(@Param('transactionHash') transactionHash: string, @Res() res: Response) {
+      const { address, hash } = await this.handler.getPasswordForTransactionHash(transactionHash);
+      return res.status(200).send({ hash, address });
+    }
+
     @Post('/hash/set')
     public async changePasswordHash(
         @Body() changePasswordDto: PasswordHashDto,
