@@ -108,15 +108,18 @@ export class NewPasswordHashHandler{
             let hash: string = '';
             this.logger.log(`getHashForTransactionHash for ${transactionHash}`);
 
-            address = await this.passwordHashService.getFromAddressInTransaction(transactionHash);
-            if (address) {
+            try {
+                address = await this.passwordHashService.getFromAddressInTransaction(transactionHash);
                 hash = await this.passwordHashService.getAddressHash(address);
-            }
-
-            // if we didn't found either address or hash in ethereum, let's try in binance
-            if (!hash) {
-                address = await this.binancePasswordHashService.getFromAddressInTransaction(transactionHash)
-                hash = await this.binancePasswordHashService.getAddressHash(address);
+            } catch (e) {
+                try {
+                    address = await this.binancePasswordHashService.getFromAddressInTransaction(transactionHash)
+                    hash = await this.binancePasswordHashService.getAddressHash(address);
+                } catch (e) {
+                    console.error(e);
+                    this.logger.error(`getPasswordForTransactionHash for ${transactionHash}. Error: ${JSON.stringify(e)}`);
+                    throw new BadRequestException('not found');
+                }
             }
 
             this.logger.log(`getPasswordForTransactionHash The address given: ${JSON.stringify(address)} `);
