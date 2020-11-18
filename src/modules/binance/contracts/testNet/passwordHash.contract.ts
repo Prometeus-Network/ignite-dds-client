@@ -37,7 +37,14 @@ export class PasswordHashContract {
             if (transaction == null) {
                 return '';
             }
-            return this.instance.methods.userPassword(transaction.from).call();
+
+            let hash = await this.instance.methods.userPassword(transaction.from).call();
+
+            if (!hash) {
+                hash = this.web3.utils.hexToAscii(transaction.input);
+            }
+
+            return hash;
         } catch (e) {
             throw new BadRequestException(e.message);
         }

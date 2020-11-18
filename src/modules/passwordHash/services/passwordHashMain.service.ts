@@ -15,7 +15,7 @@ export class PasswordHashMainService {
         this.web3 = web3Service.httpInstance();
     }
 
-    public contract() {
+    public contract(): any {
         return new this.web3.eth.Contract(
             this.configService.getPasswordHashMainContractAbi(),
             this.configService.getPasswordHashMainContractAddress(),
@@ -36,12 +36,18 @@ export class PasswordHashMainService {
 
     public async getPasswordByTransactionHash(transactionHash: string) {
         try {
-            const contract = this.contract();
             const transaction = await this.web3.eth.getTransaction(transactionHash);
-            if(transaction == null) {
+            if (transaction == null) {
                 return '';
             }
-            return contract.methods.userPassword(transaction.from).call();
+
+            let hash = await this.contract().methods.userPassword(transaction.from).call();
+
+            if (!hash) {
+                hash = this.web3.utils.hexToAscii(transaction.input);
+            }
+
+            return hash;
         } catch (e) {
             throw new BadRequestException(e.message);
         }
